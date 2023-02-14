@@ -1,10 +1,10 @@
-function createTweet(tweet) {
+function createGlitt(glitt) {
   return `
         <div class="card-text nb-3 glitter-container bg-color shadow-lg">
         <div class="card-body m-2 pt-3">
-        <p class="card-text color">${tweet.tweet}</p>
+        <p class="card-text color">${glitt.text}</p>
         <hr />
-        <p class="card-text color">${tweet.user || ""}</p>
+        <p class="card-text color">${glitt.name || ""}</p>
         <hr />
         <div class="card-footer">
             <button type="button" class="btn btn-icon color"><i class="fa-solid fa-retweet"></i></button>
@@ -16,7 +16,7 @@ function createTweet(tweet) {
 
 function postGlitt() {
   const text = document.getElementById("glittText") as HTMLTextAreaElement;
-  const payload = { tweet: text.value, user: "Jascha" };
+  const payload = { text: text.value, user: "Jascha" };
   fetch("http://localhost:3000/glitts", {
     method: "POST",
     headers: {
@@ -27,16 +27,16 @@ function postGlitt() {
     .then((res) => {
       return res.json();
     })
-    .then((tweet) => {
+    .then((glitt) => {
       document.getElementById("cards-container").innerHTML +=
-        createTweet(tweet);
+        createGlitt(glitt);
     });
 }
 
-function displayTweets(tweets) {
-  tweets.forEach((element) => {
+function displayGlitts(glitts) {
+  glitts.forEach((element) => {
     document.getElementById("cards-container").innerHTML +=
-      createTweet(element);
+      createGlitt(element);
   });
 }
 
@@ -46,7 +46,7 @@ fetch("http://localhost:3000/glitts")
   })
   .then(function (data) {
     console.log(data);
-    displayTweets(data);
+    displayGlitts(data);
   })
   .catch(function (err) {
     console.log(err);
